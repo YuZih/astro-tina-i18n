@@ -1,0 +1,32 @@
+---
+import BlogPost from '@/layouts/BlogPost.astro'
+import client from '@tina/__generated__/client'
+import AdminBlogPost from '@tina/pages/AdminBlogPost'
+import { getCollection } from 'astro:content'
+
+// Generate static paths for all blog posts
+export async function getStaticPaths() {
+	const posts = await getCollection('blog')
+
+	return posts.map((post) => ({
+		params: { slug: post.data.tinaInfo.filename },
+		props: {
+			post,
+			getTinaProps: async () =>
+				client.queries.blog({
+					relativePath: post.data.tinaInfo.relativePath,
+				}),
+		},
+	}))
+}
+
+// Destructure post and getTinaProps from props
+const { post, getTinaProps } = Astro.props
+
+// Fetch Tina props
+const tinaProps = await getTinaProps()
+---
+
+<BlogPost {...post.data}>
+	<AdminBlogPost {...tinaProps} client:tina />
+</BlogPost>

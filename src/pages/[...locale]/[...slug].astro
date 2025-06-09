@@ -1,0 +1,48 @@
+---
+import BaseHead from '@/components/BaseHead.astro'
+import Footer from '@/components/Footer.astro'
+import Header from '@/components/Header.astro'
+import config from '@/content/config/config.json'
+import client from '@tina/__generated__/client'
+import Page from '@tina/pages/Page'
+import { getCollection } from 'astro:content'
+
+// Generate static paths for all pages across different locale and slug combinations
+export async function getStaticPaths() {
+	const pages = await getCollection('page')
+
+	return pages.map((page) => {
+		const [locale, fileName] = page.id.split('/')
+
+		return {
+			params: { locale, slug: fileName },
+			props: {
+				getTinaProps: async () =>
+					client.queries.page({
+						relativePath: page.data.tinaInfo.relativePath,
+					}),
+			},
+		}
+	})
+}
+
+// Fetch data by getTinaProps
+const { locale } = Astro.params
+const { getTinaProps } = Astro.props
+const data = await getTinaProps()
+---
+
+<!doctype html>
+<html lang={locale}>
+	<head>
+		<BaseHead
+			title={data.data.page.seoTitle}
+			description={config.seo.description}
+		/>
+	</head>
+	<body>
+		<Header />
+		<Page {...data} client:tina />
+		<Footer />
+	</body>
+</html>

@@ -1,0 +1,26 @@
+---
+// import BaseHead from '@/components/BaseHead.astro'
+// import Footer from '@/components/Footer.astro'
+// import Header from '@/components/Header.astro'
+// import config from '@/content/config/config.json'
+// import client from '@tina/__generated__/client'
+// import HomePage from '@tina/pages/HomePage.tsx'
+
+// const data = await client.queries.page({ relativePath: 'en/home.mdx' })
+---
+
+<!-- <!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={config.seo.title} description={config.seo.description} />
+	</head>
+	<body>
+		<Header />
+		<HomePage {...data} client:tina />
+		<Footer />
+	</body>
+</html> -->
+
+<!-- The above will display the English homepage directly at path '/', 
+     but you can use the following instead if you prefer to redirect to the default locale -->
+<meta http-equiv="refresh" content="0;url=/en/" />
