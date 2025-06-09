@@ -1,6 +1,8 @@
 # Astro + TinaCMS + i18n Starter
 
-This is a starter project integrated with [Astro](https://docs.astro.build/en/guides/cms/tina-cms/), [TinaCMS](https://tina.io/docs/frameworks/astro), [TinaCloud](https://tina.io/docs/tina-cloud), and [i18n](https://docs.astro.build/en/guides/internationalization/).  
+**English** | [繁體中文](./README.zh-TW.md)
+
+This is a starter project integrated with [Astro](https://docs.astro.build/en/guides/cms/tina-cms/), [TinaCMS](https://tina.io/docs/frameworks/astro), [TinaCloud](https://tina.io/docs/tina-cloud), and [i18n](https://docs.astro.build/en/guides/internationalization/). It is designed for deployment on Netlify.
 
 The project is built based on [tina-astro-starter](https://github.com/tinacms/tina-astro-starter#) and extends it with multilingual support, customized routing, and full TypeScript support for type-safe development.
 
@@ -77,4 +79,31 @@ src/pages
 
    Navigate to `http://localhost:4321/admin/index.html` to access the CMS interface.
 
+## Deploy to Production
 
+1. **Initialize TinaCloud backend:**
+
+   ```bash
+   npx @tinacms/cli init backend
+   ```
+
+2. **Add `.env` file:**
+
+   ```env
+   NODE_OPTIONS=--max-old-space-size=4096
+   PUBLIC_TINA_CLIENT_ID=your-client-id        # Grab from TinaCloud app.tina.io
+   TINA_TOKEN=your-token                       # Grab from TinaCloud app.tina.io
+   TINA_PUBLIC_IS_LOCAL=true
+   SITE_URL=https://your-project-name.netlify.app  # Replace with your Netlify site URL
+   ```
+
+3. **Configure environment variables on Netlify and deploy:**
+
+   Ensure the following variables are set in your Netlify project settings:
+
+   ```env
+   NODE_OPTIONS=--max-old-space-size=4096
+   PUBLIC_TINA_CLIENT_ID=your-client-id        # Grab from TinaCloud app.tina.io
+   TINA_TOKEN=your-token                       # Grab from TinaCloud app.tina.io
+   SITE_URL=https://your-project-name.netlify.app  # Replace with your Netlify site URL
+   ```
